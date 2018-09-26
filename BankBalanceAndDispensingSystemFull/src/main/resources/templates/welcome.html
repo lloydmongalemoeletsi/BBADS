@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlms:th="https://www.thymeleaf.org/" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:xmlms="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+</head>
+<body>
+<script>
+function myFunction() {
+    var x = document.getElementById("demo")
+    x.innerHTML = Math.floor((Math.random() * 20) + 1);
+}
+</script>
+
+<h1>Welcome to accounts management</h1>
+<table>
+   <tr>
+        <td>
+            <form th:action = "@{accountDetails/1}"  method="GET">
+                <input type = "submit" value = "View Transactional Balances"/>
+            </form>
+        </td>
+   </tr>
+   <tr>
+         <td>
+             <form th:action = "@{currencyDetails/1}"  method="GET">
+                <input type="submit" value="View Currency Account Balances"/>
+             </form>
+         </td>
+   </tr>
+   <tr>
+       <td>
+           <form th:action = "@{/customerAccountsToWithdraw/1}"  method="GET">
+               <input type="submit" value="Withdraw"/>
+           </form>
+       </td>
+      </tr>
+</table>
+</body>
+</html>

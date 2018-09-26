@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Withdraw</title>
+</head>
+<body>
+<h1>Draw From Account</h1>
+
+<table>
+    <form th:action="@{/withdrawAmount}" method="GET">
+        <tr><td>Type</td><td th:text="${param.accountType[0]}"></tr>
+        <tr><td>Account Number</td> <td th:text="${param.clientAccountNumber[0]}"></td></tr>
+        <tr><td>Required Amount</td></tr>
+        <tr><td th:value="*{amount}"><input type="text" name="amount"></td></tr>
+        <tr><td th:value="${param.clientAccountNumber[0]}" id="clientAccountNumber" name="clientAccountNumber"><input type="hidden" name="clientAccountNumber"></td></tr>
+
+        <tr><td><input type="submit" value="Submit"/></td></tr>
+    </tr>
+    </form>
+</table>
+<input onclick='javascript:window.history.back()' value='Back' type='button' />
+</body>
+</html>

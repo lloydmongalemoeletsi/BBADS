@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlms:th="https://www.thymeleaf.org/" xmlns:xmlms="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="../static/css/spring-core.css" th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+    <style>
+     table{width:100%;}
+     table td, table th { border: 1px solid grey;}
+     table th { user-select: none; background: #eee;}
+     table tr th:first-child{width:100px;}
+     table tr th:nth-child(3){width:150px;}
+     table tr th:nth-child(4){width:150px;}
+     .pagination-div{user-select: none;}
+     .pagination-div span{border-radius:3px;border:1px solid #999;
+         padding:5px;margin:10px 0px 0px 10px;display:inline-block}
+     span.selected{background:#ccf;}
+  </style>
+</head>
+<!-- CSS INCLUDE -->
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"></link>
+<!-- EOF CSS INCLUDE -->
+<style>
+.pagination-centered {
+    text-align: center;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.pointer-disabled {
+    pointer-events: none;
+}
+</style>
+<body>
+<script
+        src="https://code.jquery.com/jquery-1.11.1.min.js"
+        integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE="
+        crossorigin="anonymous"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function() {
+    changePageAndSize();
+});
+function changePageAndSize() {
+    $('#pageSizeSelect').change(function(evt) {
+        window.location.replace("/?pageSize=" + this.value + "&page=1");
+    });
+}
+        /*]]>*/
+ </script>
+<h1 align="center">Account Selection</h1>
+<div class="container">
+    <div th:if="${not #lists.isEmpty(accounts)}">
+        <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Account Number</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.clientAccountNumber}"></td>
+                <form th:action="@{/withdraw}" method="POST">
+                    <td><a href="withdraw.html" th:href="@{http://localhost:8080/withdraw/(clientAccountNumber=${account.clientAccountNumber},accountType=${account.accountTypeCode.description},clientId=${account.clientId})}">withdraw</a></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+        <input onclick='javascript:window.history.back()' value='Back' type='button' />
+    </div>
+</div>
+</body>
+</html>
