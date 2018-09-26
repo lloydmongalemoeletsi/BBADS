@@ -1,0 +1,31 @@
+SELECT
+    *
+FROM
+    (SELECT DISTINCT
+        CONCAT(c.title, '  ', c.name, ' ', c.surname) AS Client
+    FROM
+        CLIENT c) AS a
+        JOIN
+    (SELECT
+        SUM(ca.display_balance) AS LoanBalance
+    FROM
+        CLIENT_ACCOUNT ca, CLIENT c
+    INNER JOIN CLIENT ON ca.CLIENT_ID = c.CLIENT_ID
+    WHERE
+        ca.account_type_code IN ('HLOAN' , 'PLOAN')
+    GROUP BY (c.client_id)) AS b
+        JOIN
+    (SELECT
+        SUM(ca.display_balance) AS TransactionalBalance
+    FROM
+        CLIENT_ACCOUNT ca, CLIENT c
+    INNER JOIN CLIENT ON ca.CLIENT_ID = c.CLIENT_ID
+    WHERE
+        ca.account_type_code IN ('CCRD' , 'CHQ', 'SVGS')
+    GROUP BY (c.client_id)) AS c
+        JOIN
+    (SELECT
+        SUM(ca.display_balance) AS NetPosition
+    FROM
+        CLIENT_ACCOUNT ca
+    GROUP BY ca.CLIENT_ID) as d​
